@@ -1,11 +1,11 @@
-//Spiral Display
+
+
+//Saddle Price
 
 /*
-1. You are given a number n, representing the number of rows.
-2. You are given a number m, representing the number of columns.
-3. You are given n*m numbers, representing elements of 2d array a.
-4. You are required to traverse and print the contents of the 2d array in form of a spiral.
-Note - Please check the sample output for details.
+1. You are given a square matrix of size 'n'. You are given n*n elements of the square matrix. 
+2. You are required to find the saddle price of the given matrix and print the saddle price. 
+3. The saddle price is defined as the least price in the row but the maximum price in the column of the matrix.
 
 Constraints
 
@@ -16,72 +16,42 @@ Format
 Input
 
 A number n
-A number m
 e11
 e12..
 e21
 e22..
-.. n * m number of elements
+.. n * n number of elements of array a
 
 Output
 
-e11
-e21
-..
-en1
-en2
-en3
-..
-enm
-e(n-1)m
-..
-e1m
-e1(m-1)
-..
-e12
-e22
-e32
-..
+Saddle point of the matrix if available or "Invalid input" if no saddle point is there.
 
 Example
 
 Sample Input
 
-3
-5
+4
 11
 12
 13
 14
-15
 21
 22
 23
 24
-25
 31
 32
 33
 34
-35
+41
+42
+43
+44
 
 Sample Output
 
-11
-21
-31
-32
-33
-34
-35
-25
-15
-14
-13
-12
-22
-23
-24
+41
+
 */
 
 //Source Code
@@ -89,72 +59,60 @@ Sample Output
 import java.io.*;
 import java.util.*;
 
-public class Spiral_Display {
+public class Saddle_Price{
 
     public static void main(String[] args) throws Exception {
         // write your code here
-        Scanner scn = new Scanner (System.in);
-       int n = scn.nextInt();
-    int m = scn.nextInt();
-    int[][] mat = new int[n][m];
-    for (int i = 0 ; i<n;i++){
-        for(int j = 0 ; j<m;j++){
 
-            mat[i][j]=scn.nextInt();
+        Scanner scn = new Scanner (System.in );
+        int n = scn.nextInt();
+
+        int[][] arr = new int[n][n];
+
+        for ( int i=0 ; i<n ; i++){
+            for ( int j = 0 ; j<n ; j++){
+
+                arr[i][j]=scn.nextInt();
+            }
         }
+      // first of all create a loop in  row
+          
+          int minCol=0;
+
+      for (int i= 0 ;i<arr.length ; i++ ){
+
+          // now check minimum of the ith row element 
+
+          for (int j = 0 ; j<arr[0].length ; j++){
+           // check kro konse element minimum hai is row mai colunm ko aage badate hua
+
+           if (arr[i][j]<arr[i][minCol]){
+
+               minCol=j;
+           }
+          }
+
+          // ab max check krna 
+           int maxRow= 0 ;
+
+          for ( int k = 0 ; k<arr.length;k++){
+
+         if(arr[k][minCol]>arr[maxRow][minCol]){
+             maxRow=k ;
+         }
+          }
+// ab check krna  hai ki min in row -->max in col hai ya nhi 
+
+          if (maxRow==i){
+              System.out.println(arr[maxRow][minCol]);
+              return;
+          }
+      } 
+// agr koi saddle point nhi aata toh invalid ya fir 0 saddle point hoga 
+
+System.out.println("Invalid input");
+
+
     }
 
-      int count =  0;
-       int frow = 0 ;
-         int fcol = 0 ; 
-         int lrow = n-1;
-         int lcol= m-1;
-    while (true){
-        
-        
-         //left wall 
-          for ( int i = fcol ; i<=lrow ; i++){
-           System.out.println(mat[i][fcol]);
-           count++;
-           if (count==n*m){
-               return ; 
-           }
-          }
-           fcol++;
-           //bottom wall
-
-           for ( int j=fcol; j <= lcol ; j++){
-               System.out.println(mat[lrow][j]);
-               count++;
-               if ( count==n*m){
-                   return;
-               }
-           }
-           lrow--;
-           //right wall 
-           for (int k = lrow ; k>=frow ; k--){
-               System.out.println(mat[k][lcol]);
-               count++;
-               if (count==n*m){
-                   return;
-               }
-           }
-          lcol--;
-
-          // Top wall
-
-          for ( int j = lcol ; j>=fcol ; j--){
-              System.out.println(mat[frow][j]);
-              count++;
-              if ( count==n*m){
-                  return;
-              }
-          }
-          frow++;
-          }
-
-
-       }
-
-        
-    }
+}
