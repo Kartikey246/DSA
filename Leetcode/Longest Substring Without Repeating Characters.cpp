@@ -46,7 +46,7 @@ public:
         }
  
         // Remove the first character of previous
-        // window
+        // window to move the window forward
         visited[str[i]] = false;
     }
     return res;
