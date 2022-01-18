@@ -13,18 +13,17 @@ Explanation: The missing positive integers are [1,5,6,8,9,10,12,13,...]. The 5th
 */
 
 class Solution {
-    public int findKthPositive(int [] A, int k) {
-       int low = 0;
-       int high = A.length-1 ;
-       int mid;
-       while (low <= high) {
-            mid = (low + high) / 2;
-            if (A[mid] - (1 + mid) < k)  //A[m]-(m+1)   --> This gives umber of missing number before m'th index
-                low = mid + 1;
+
+        public int findKthPositive(int[] A, int k) {
+        int l = 0, r = A.length, m;
+        while (l < r) {
+            m = (l + r) / 2;
+            if (A[m] - 1 - m < k)
+                l = m + 1;
             else
-                high = mid-1;
+                r = m;
         }
-        return low + k;
+        return l + k;
     }
 }
 
